@@ -1,0 +1,251 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0px;
+  height: 100%;
+  background-color: #A0A0A0;
+}
+/* a blue color as a generic focus style */
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+a {
+  text-decoration: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Adjust opacity here (0.7 = 70% opacity) */
+  z-index: 9999; /* Ensure it is on top of everything */
+  pointer-events: none; /* Prevent it from blocking clicks or interactions */
+  transition: background-color 1.5s ease-out;
+}
+
+
+.fadein{
+  background-color: #000000;
+}
+
+.frame {
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background-color: rgba(255, 255, 255, 1.0);
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgb(160, 160, 160) 100%
+    );
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+  .overlap-group {
+    position: relative;
+    width: 36vw; /* Responsive width */
+    height: 36vw; /* Responsive height (square) */
+    max-width: 580px; /* Limit maximum size */
+    max-height: 580px;
+    background-color: #212529;
+    box-shadow: 4px 10px 4px #00000040;
+    transform-origin: center;
+    transition: transform 3s ease-in;
+    overflow: hidden;
+  }
+
+  .goIn{
+    transform: scale(2.5);
+  }
+  
+  .internal-box {
+    position: absolute;
+    width: 85%; /* Relative to parent */
+    height: 85%;
+    top: 7.5%; /* Center within parent */
+    left: 7.5%;
+    z-index: 2;
+
+    box-shadow: inset -8px -8px 4px #00000080, inset 8px 8px 4px #00000080;
+    transition: box-shadow 0.75s ease;
+  }
+  .left{
+    position: absolute;
+    width: 43%; /* Relative to parent */
+    height: 85%;
+    top: 7.5%;
+    left: 7.5%;
+    z-index: 2;
+    background-color: #343a40;
+    clip-path: inset(0 0 0 0);
+
+    transition: clip-path 2s ease-in-out;
+    
+  }
+  
+  .right{
+    position: absolute;
+    width: 43%; /* Relative to parent */
+    height: 85%;
+    top: 7.5%;
+    right: 7.5%;
+    z-index: 2;
+    background-color: #343a40;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 2s ease-in-out;
+  }
+  .openLeft{
+    clip-path: inset(0 100% 0 0);
+  }
+  .openRight{
+    clip-path: inset(0 0 0 100%);
+  }
+
+  .portal {
+    position: absolute;
+    width: 85%; /* Relative to parent */
+    height: 85%;
+    top: 7.5%; /* Center within parent */
+    left: 7.5%;
+    z-index: 1;
+    background-image: url("https://i.imgur.com/SZY6dU6.jpeg");
+    box-shadow: inset -8px -8px 4px rgba(96, 211, 148, 0.5), inset 8px 8px 4px rgba(96, 211, 148, 0.5);
+  }
+  
+
+
+  .internal-box.granted{
+    box-shadow: inset -8px -8px 4px rgba(96, 211, 148, 0.5), inset 8px 8px 4px rgba(96, 211, 148, 0.5);
+  }
+
+  .internal-box.denied{
+    box-shadow: inset -8px -8px 4px rgba(238, 96, 85, 0.5), inset 8px 8px 4px rgba(238, 96, 85, 0.5);
+  }
+
+
+
+.welcome {
+    position: absolute;
+    width: 100%; /* Relative to parent */
+    top: 17%; /* Responsive positioning */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-family: "Michroma", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #ffffff;
+    font-size: calc(1vw + 0.6em); /* Responsive font size */
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    text-shadow: rgba(0, 0, 0, 0.25) 4px 8px 4px;
+  }
+
+  .welcome.granted{
+    text-shadow: rgba(96, 211, 148, 1) 1px 0px 10px;
+    color: rgba(96, 211, 148, 1)
+
+  }
+  .welcome.denied{
+    text-shadow: rgba(238, 96, 85, 0.5) 1px 0px 10px;
+    color: rgba(255, 53, 37, 1)
+
+  }
+
+
+  .image-box {
+    position: absolute;
+    width: 47%; /* Relative to parent */
+    height: 43%;
+    top: 31%; /* Responsive positioning */
+    left: 26.5%;
+    background-color: #27313b;
+    border-radius: 10px;
+    border: 3px solid;
+    border-color: #181f25;
+    box-shadow: rgba(0, 0, 0, 0.25) 6px 6px 4px;
+  }
+
+  
+  .button {
+    position: absolute;
+    width: 39%; /* Relative to parent */
+    height: 8.3%; /* Relative to parent */
+    top: 77%; /* Responsive positioning */
+    left: 30.3%;
+     /* Responsive positioning */
+     /* Button background color */
+    box-shadow: 1px 4px 4px #00000040; /* Subtle shadow */
+    border: none; /* Removes default border */
+    font-family: "Hammersmith One", Helvetica, sans-serif; /* Fallback for unsupported fonts */
+    font-weight: 400; /* Normal font weight */
+    
+    font-size: calc(1vw + 0.1em); /* Responsive font size */
+    letter-spacing: 0; /* No extra spacing */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center; /* Align text for multi-line content */
+    line-height: normal; /* Reset default line height */
+    /* padding: 0.5em; Adds inner space for better fit */
+    overflow: hidden; /* Prevent content overflow */
+    box-sizing: border-box; /* Includes padding in width and height */
+    border-radius: 5px; /* Optional: Rounded corners */
+  }
+
+  .button:enabled{
+    background-color: #4F5D75;
+    color: #F2FFAA; /* Text color */
+  }
+
+  .button:disabled{
+    background-color: #747474;
+    color: #ffffff; /* Text color */
+
+  }
+  @media (max-width: 600px) {
+    .button {
+        font-size: calc(2vw + 0.3em); /* Slightly larger font for small screens */
+    }
+}
+  .button:enabled:hover {
+    color: #FFFFFF
+  }
+  .button:enabled:active {
+    transform: translateY(2px); /* Move button down slightly */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Reduce shadow */
+}
+
+.hologram {
+  z-index: 5;
+  clip-path: inset(0 0 0 0);  /* Fully visible */
+  height: 100%;
+  width: 100%;
+  
+}
+
+/* Animation Keyframes */
+@keyframes wipe-out-clip {
+  from {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    -webkit-clip-path: inset(100% 0 0 0);
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+/* Animation Class */
+.animate {
+  animation: wipe-out-clip 2s linear forwards;
+  animation-delay: 0.75s;
+}

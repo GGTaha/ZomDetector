@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Michroma&display=swap" rel="stylesheet">
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanguard Bunker</title>
+  <style>
+    /* General Reset */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background-color: #bfbfbf; /* Gray background */
+      overflow: hidden; /* Prevent scroll during transition */
+    }
+
+    /* Fade Overlay */
+    .fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 1.5s ease-in; /* Fade-out effect */
+    }
+
+    /* Main Content */
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .bunker-message {
+      height: 30%; /* Let the height adjust to fit the content */
+      width: 40%; /* Set an absolute width */
+      background-color: #E4E4E4;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-wrap: break-word; /* Ensure long words wrap */
+      word-wrap: break-word; /* Compatibility with older browsers */
+      hyphens: auto; /* Optional for proper word hyphenation */
+    }
+
+    .bunker-message p {
+      font-family: "Michroma", sans-serif;
+      font-size: 3rem;
+      color: #2CC7FF;
+      text-shadow: 0 0 10px #2CC7FF;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Black Overlay for Fade-In Effect -->
+  <div class="fade-overlay" id="fadeOverlay"></div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="bunker-message">
+      <p>Welcome to the Vanguard Bunker</p>
+    </div>
+  </div>
+
+  <script>
+    // Wait for the DOM to load
+    document.addEventListener("DOMContentLoaded", function () {
+      const fadeOverlay = document.getElementById("fadeOverlay");
+      
+      // Fade out the black overlay after 1 second
+      setTimeout(function () {
+        fadeOverlay.style.opacity = "0";
+        
+        // Remove the overlay from the DOM after fading out
+        setTimeout(function () {
+          fadeOverlay.style.display = "none";
+        }, 1500); // Match the CSS transition duration
+      }, 500); // Delay before starting fade
+    });
+  </script>
+</body>
+</html>

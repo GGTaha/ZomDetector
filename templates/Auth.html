@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Michroma&display=swap" rel="stylesheet">
+  </head>
+
+
+  <body>
+    <div class="frame">
+      
+      <div id='door' class="overlap-group">
+        <div class="portal"></div>
+        <div id = 'left' class="left"></div><div id ='right' class="right"></div>
+
+        <div id ="box" class="internal-box"> 
+        
+
+        <div id="hologram" class="hologram" >
+          <p id="welcome" class="welcome">Prove You&#39;re Alive!</p>
+        
+          <!-- Image Upload Form -->
+          <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="image-box" id="image-box">
+              <!-- Default or selected image preview -->
+              <img id="preview" src="{{ url_for('static', filename='default-image.png') }}" alt="Click to Upload" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="triggerUpload()" />
+            </div>
+            
+            <!-- Hidden File Input to trigger upload -->
+            <input type="file" id="file-input" name="image" accept="image/*" style="display:none;" onchange="previewImage(event)" />
+            
+
+            <button type="submit" id="upload-btn" class="button" disabled>Upload Image</button>
+          </form>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    <div class="overlay" id="black"></div>
+
+    <script>
+      // Function to preview the selected image
+      function previewImage(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const preview = document.getElementById('preview');
+          
+          // Update the preview image with the selected file
+          preview.src = e.target.result;
+
+          // Enable the upload button after selecting an image
+          document.getElementById('upload-btn').disabled = false;
+        };
+        
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // Function to trigger the file input when the image is clicked
+      function triggerUpload() {
+        document.getElementById('file-input').click();
+      }
+
+      // Function to handle access granted
+      function accessGranted() {
+        console.log("Access Granted")
+        const welcomeMessage = document.getElementById('welcome');
+        welcomeMessage.innerText = 'Access Granted!';
+        welcomeMessage.classList.add('granted')
+        const box = document.getElementById('box')
+        box.classList.add('granted')
+
+        const holo = document.getElementById('hologram');
+
+        // Trigger animation
+        holo.classList.add('animate');    // Apply animation
+        holo.addEventListener('animationend', function(event) {
+          openDoor();
+      });
+      }
+
+      // Function to handle access denied
+      function accessDenied() {
+        console.log("Access Denied")
+        const welcomeMessage = document.getElementById('welcome');
+        welcomeMessage.innerText = 'Access Denied!';
+        welcomeMessage.classList.add('denied')
+        const box = document.getElementById('box')
+        box.classList.add('denied')
+        
+      }
+
+      function openDoor(){
+        const leftDoor = document.getElementById('left')
+        leftDoor.classList.add('openLeft')
+        const rightDoor = document.getElementById('right')
+        rightDoor.classList.add('openRight')
+        rightDoor.addEventListener('transitionend', function(event) {
+          goIn();
+          redirectToBunker();
+      });
+      }
+
+      function goIn(){
+        const door = document.getElementById('door')
+        door.classList.add('goIn')
+        const black = document.getElementById('black')
+        black.classList.add('fadein')
+        console.log("Going In!")
+      }
+      // Handle form submission
+      document.getElementById('upload-form').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(this); // Create a FormData object from the form
+
+        try {
+          const response = await fetch('/upload', { method: 'POST', body: formData }); // Wait for the fetch to complete
+          const serverResponse = await response.text(); // Wait for the response text
+          console.log('Server response:', serverResponse); // Log the response
+
+          if (serverResponse === "Human") {
+            accessGranted(); // Call accessGranted if the result is "Human"
+          } else {
+            accessDenied(); // Call accessDenied for any other result
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          accessDenied(); // Call accessDenied in case of an error
+        }
+      });
+
+          function redirectToBunker() {
+      setTimeout(function() {
+        window.location.href = "/bunker";  // Redirect after 1.5 seconds
+      }, 1500); 
+    }
+
+        
+      
+    </script>
+  </body>
+</html>
