@@ -46,7 +46,7 @@ def upload_image():
 
 def getSubject(image):
     try:  
-        genai.configure(api_key="AIzaSyDU5Ka51cReNkDqMBS-grM-WOHlHNaCmp0")
+        genai.configure(api_key="")
 
         # Create the model
         generation_config = {
